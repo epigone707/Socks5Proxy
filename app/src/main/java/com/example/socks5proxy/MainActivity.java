@@ -211,7 +211,8 @@ public class MainActivity extends AppCompatActivity {
                 return (ipAddressBytes[0] & 0XFF) + "." + (ipAddressBytes[1] & 0XFF) + "." + (ipAddressBytes[2] & 0XFF) + "." + (ipAddressBytes[3] & 0XFF);
             }
 
-            // handle CONNECT command
+            // handle CONNECT command,
+            // create a new socket(targetAddress, targetPort) and start forwarding the traffic between client and target
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             private void handleConnectCommand(String targetAddress, int targetPort) throws IOException {
                 Socket targetSocket = null;
@@ -236,8 +237,8 @@ public class MainActivity extends AppCompatActivity {
                 payload.put(VERSION);
                 payload.put(commandStatusCode);
                 payload.put(RSV);
-//          payload.put(ADDRESS_TYPE.IPV4.value);
-//          payload.put(SERVER_IP_ADDRESS.getBytes());
+//                payload.put(ADDRESS_TYPE.IPV4.value);
+//                payload.put(SERVER_IP_ADDRESS.getBytes());
                 payload.put(ADDRESS_TYPE.DOMAIN.value);
                 byte[] addressBytes = SERVER_IP_ADDRESS.getBytes();
                 payload.put((byte) addressBytes.length);
@@ -317,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
                         }
 
-                        // 如果本次循环没有数据传输，说明管道现在不繁忙，应该休息一下把资源让给别的线程
+                        // if no data to forward, sleep 10 seconds
                         if (needSleep) {
                             try {
                                 TimeUnit.MILLISECONDS.sleep(10);
