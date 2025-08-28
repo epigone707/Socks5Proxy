@@ -3,13 +3,12 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    namespace = "com.example.socks5proxy"
+    compileSdkVersion 36
 
     defaultConfig {
         applicationId "com.example.socks5proxy"
-        minSdkVersion 16
-        targetSdkVersion 30
+        minSdkVersion 24
         versionCode 1
         versionName "1.0"
 
